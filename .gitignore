@@ -13,6 +13,9 @@ backups/
 # ISO Files
 *.iso
 
+# Environment Variables
+.env
+
 # OS / Temporary Files
 .DS_Store
 *.log

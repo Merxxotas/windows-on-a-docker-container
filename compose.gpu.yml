@@ -1,3 +1,6 @@
+# Docker Compose Configuration with Hardware GPU Passthrough & Acceleration
+# Run using: docker compose -f compose.gpu.yml up -d
+
 services:
   windows:
     image: dockurr/windows
@@ -8,6 +11,7 @@ services:
       RAM_SIZE: "16G"
       CPU_CORES: "8"
       CPU_MODEL: "host"
+      VGA: "virtio"
       TZ: "America/Bogota"
       AUDIO: "Y"
       USERNAME: "${USERNAME:-merxx}"
@@ -15,8 +19,9 @@ services:
       REGION: "en-us"
       KEYBOARD: "es-CO"
     devices:
-      - /dev/kvm
-      - /dev/net/tun
+      - /dev/kvm:/dev/kvm
+      - /dev/dri:/dev/dri
+      - /dev/net/tun:/dev/net/tun
     cap_add:
       - NET_ADMIN
     ports:
@@ -27,7 +32,5 @@ services:
       - ./:/storage
       - /home/merxx:/shared/home
       - /mnt/vicioo:/shared/vicioo
-      # Uncomment to use a custom ISO file:
-      # - /mnt/vicioo/ISOS/en-us_windows_11_iot_enterprise_ltsc_2024_x64_dvd_f6b14814-ENGVersion.iso:/custom.iso
     restart: always
     stop_grace_period: 2m

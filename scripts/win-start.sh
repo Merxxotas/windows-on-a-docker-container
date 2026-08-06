@@ -20,13 +20,23 @@ else
     echo "✅ 'windows' container is already running."
 fi
 
+# Load .env variables if present
+if [ -f "$DIR/.env" ]; then
+    set -a
+    source "$DIR/.env"
+    set +a
+fi
+
+WIN_USER="${USERNAME:-merxx}"
+WIN_PASS="${PASSWORD:-030414}"
+
 if command -v xfreerdp3 &> /dev/null; then
     echo "🖥️ Connecting via RDP (xfreerdp3)..."
-    xfreerdp3 /v:localhost:3389 /u:merxx /p:030414 +clipboard /dynamic-resolution /sound:sys:pulse
+    xfreerdp3 /v:localhost:3389 /u:"$WIN_USER" /p:"$WIN_PASS" +clipboard /dynamic-resolution /sound:sys:pulse
 elif command -v xfreerdp &> /dev/null; then
     echo "🖥️ Connecting via RDP (xfreerdp)..."
-    xfreerdp /v:localhost:3389 /u:merxx /p:030414 +clipboard /dynamic-resolution /sound:sys:pulse
+    xfreerdp /v:localhost:3389 /u:"$WIN_USER" /p:"$WIN_PASS" +clipboard /dynamic-resolution /sound:sys:pulse
 else
     echo "⚠️ Neither 'xfreerdp3' nor 'xfreerdp' binary was found."
-    echo "You can connect manually via RDP to localhost:3389 (User: merxx | Pass: 030414) or use Remmina / Web UI (http://localhost:8006)."
+    echo "You can connect manually via RDP to localhost:3389 (User: $WIN_USER | Pass: $WIN_PASS) or use Remmina / Web UI (http://localhost:8006)."
 fi

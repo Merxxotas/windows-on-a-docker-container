@@ -18,6 +18,9 @@ An automated and optimized environment to run **Windows 11 (Enterprise LTSC)** i
 - 📁 **Host Storage Sharing**: Transparent SMB file access from Windows (`\\host.lan\home` and `\\host.lan\vicioo`).
 - 💾 **Instant BTRFS Snapshots**: Backup 64 GB virtual disk images in 1 second using Copy-On-Write technology.
 - 🩺 **System Doctor (`win-doctor.sh`)**: Audits KVM, TUN, Docker daemon, sound server, and network port health.
+- 🎮 **Hardware GPU Acceleration (`compose.gpu.yml`)**: Pre-configured compose template for Intel/AMD Mesa/Vulkan GPU passthrough.
+- 📦 **OS Version Switcher (`win-select-version.sh`)**: Interactive selector for Windows editions (`win11`, `win11-ltsc`, `tiny11`, `win10`, `server2025`).
+- ⚡ **Background Systemd Daemon (`setup-service.sh`)**: Automatic background autostart configuration for Linux host boots.
 - 🖥️ **Desktop Launcher**: Install standard Linux application menu shortcuts with 1 command (`install-desktop-shortcut.sh`).
 - ⚙️ **Automated CI/CD Pipeline**: GitHub Actions validation for Docker Compose and shell script syntax integrity.
 
@@ -28,6 +31,7 @@ An automated and optimized environment to run **Windows 11 (Enterprise LTSC)** i
 ```text
 .
 ├── compose.yml                 # Docker Compose configuration (KVM, ports, volume mounts)
+├── compose.gpu.yml             # GPU-accelerated Docker Compose deployment
 ├── install_windows.sh          # One-click automated setup & verification script
 ├── .gitignore                  # Excludes large VM disks, ISOs, state files, and backups
 ├── README.md                   # Main repository README
@@ -43,6 +47,8 @@ An automated and optimized environment to run **Windows 11 (Enterprise LTSC)** i
     ├── win-stop.sh             # Safely stops VM container to free RAM and CPU
     ├── win-status.sh           # Displays container status, CPU/RAM stats, and active ports
     ├── win-doctor.sh           # Environment health check diagnostic tool
+    ├── win-select-version.sh   # Interactive Windows OS version selector
+    ├── setup-service.sh        # Installs systemd background autostart service
     ├── install-desktop-shortcut.sh # Registers Linux desktop application menu launcher
     └── backup-vm.sh            # Creates instant Copy-On-Write BTRFS snapshots
 ```
@@ -100,6 +106,8 @@ sudo usermod -aG docker $USER
 | **Stop VM** | `./scripts/win-stop.sh` | Safely stops container and frees RAM/CPU. |
 | **Status & Stats** | `./scripts/win-status.sh` | Displays RAM/CPU usage stats and listening ports. |
 | **System Doctor** | `./scripts/win-doctor.sh` | Audits KVM, TUN, Docker, RDP clients, and audio health. |
+| **Switch OS Edition** | `./scripts/win-select-version.sh` | Interactively select Windows 11, LTSC, Tiny11, Win10, Server. |
+| **Autostart Service** | `./scripts/setup-service.sh` | Registers systemd user service for background boot start. |
 | **Install Shortcut** | `./scripts/install-desktop-shortcut.sh` | Adds 'Windows 11 (Docker VM)' to system app menu. |
 | **BTRFS Backup** | `./scripts/backup-vm.sh` | Creates an instant Copy-On-Write snapshot. |
 

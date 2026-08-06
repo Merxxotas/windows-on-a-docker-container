@@ -13,8 +13,14 @@ Complete reference manual for using the Windows VM, configuring bidirectional cl
    - **Name**: `Windows VM`
    - **Protocol**: `RDP - Remote Desktop Protocol`
    - **Server**: `localhost:3389`
-   - **Username**: `merxx`
-   - **Password**: `030414`
+   - **Username**: Your configured username (Default: `merxx`, or set in `.env`)
+   - **Password**: Your configured password (Default: `030414`, or set in `.env`)
+
+> 💡 **Custom Credentials**: You can easily change your username and password by editing `.env` (or copying `.env.example` to `.env`):
+> ```env
+> USERNAME=your_username
+> PASSWORD=your_secure_password
+> ```
 
 4. **Enable Bidirectional Clipboard (`Ctrl+C` / `Ctrl+V`)**:
    - Go to the **Advanced** tab.

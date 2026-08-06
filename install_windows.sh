@@ -50,13 +50,25 @@ else
     echo -e "  ${GREEN}✓ Docker is installed ($(docker --version))${NC}"
 fi
 
-# 4. Prepare Storage Directory
-echo -e "${GREEN}[3/5] Preparing persistent storage...${NC}"
+# 4. Prepare Storage Directory & Environment Config
+echo -e "${GREEN}[3/5] Preparing persistent storage & environment config...${NC}"
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$DIR" || exit 1
 
 mkdir -p "$DIR/storage"
 mkdir -p "$DIR/backups"
+
+if [ ! -f "$DIR/.env" ] && [ -f "$DIR/.env.example" ]; then
+    cp "$DIR/.env.example" "$DIR/.env"
+    echo -e "  ${GREEN}✓ Created default .env from .env.example${NC}"
+fi
+
+if [ -f "$DIR/.env" ]; then
+    set -a
+    source "$DIR/.env"
+    set +a
+fi
+
 echo -e "  ${GREEN}✓ Storage directories ready at $DIR/storage${NC}"
 
 # 5. Start Container
@@ -82,10 +94,12 @@ if docker ps | grep -q "windows"; then
     echo -e " Server IP:          ${BLUE}${SERVER_IP}${NC}"
     echo -e " Web Interface (UI): ${BLUE}http://localhost:8006${NC} or http://${SERVER_IP}:8006"
     echo -e " RDP Port:           ${BLUE}3389${NC}"
-    echo -e " Default Credentials: User: ${GREEN}merxx${NC} | Pass: ${GREEN}030414${NC}"
+    WIN_USER="${USERNAME:-merxx}"
+    WIN_PASS="${PASSWORD:-030414}"
+    echo -e " Default Credentials: User: ${GREEN}${WIN_USER}${NC} | Pass: ${GREEN}${WIN_PASS}${NC}"
     echo -e "---------------------------------------------------"
     echo -e " >>> ${YELLOW}One-click RDP command (Linux/xfreerdp3):${NC}"
-    echo -e " ${GREEN}xfreerdp3 /v:localhost:3389 /u:merxx /p:030414 +clipboard /dynamic-resolution /sound:sys:pulse${NC}"
+    echo -e " ${GREEN}xfreerdp3 /v:localhost:3389 /u:${WIN_USER} /p:${WIN_PASS} +clipboard /dynamic-resolution /sound:sys:pulse${NC}"
     echo -e " >>> ${YELLOW}Start script:${NC}  ./scripts/win-start.sh"
     echo -e " >>> ${YELLOW}Stop script:${NC}   ./scripts/win-stop.sh"
     echo -e " >>> ${YELLOW}Status script:${NC} ./scripts/win-status.sh"
