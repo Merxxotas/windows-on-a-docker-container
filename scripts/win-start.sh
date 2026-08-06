@@ -20,5 +20,13 @@ else
     echo "✅ 'windows' container is already running."
 fi
 
-echo "🖥️ Connecting via RDP (xfreerdp3)..."
-xfreerdp3 /v:localhost:3389 /u:merxx /p:030414 +clipboard /dynamic-resolution /sound:sys:pulse
+if command -v xfreerdp3 &> /dev/null; then
+    echo "🖥️ Connecting via RDP (xfreerdp3)..."
+    xfreerdp3 /v:localhost:3389 /u:merxx /p:030414 +clipboard /dynamic-resolution /sound:sys:pulse
+elif command -v xfreerdp &> /dev/null; then
+    echo "🖥️ Connecting via RDP (xfreerdp)..."
+    xfreerdp /v:localhost:3389 /u:merxx /p:030414 +clipboard /dynamic-resolution /sound:sys:pulse
+else
+    echo "⚠️ Neither 'xfreerdp3' nor 'xfreerdp' binary was found."
+    echo "You can connect manually via RDP to localhost:3389 (User: merxx | Pass: 030414) or use Remmina / Web UI (http://localhost:8006)."
+fi

@@ -25,6 +25,7 @@ An automated and optimized environment to run **Windows 11 (Enterprise LTSC)** i
 ```text
 .
 ├── compose.yml                 # Docker Compose configuration (KVM, ports, volume mounts)
+├── install_windows.sh          # One-click automated setup & verification script
 ├── .gitignore                  # Excludes large VM disks, ISOs, state files, and backups
 ├── README.md                   # Main repository README
 ├── docs/
@@ -58,10 +59,15 @@ sudo usermod -aG docker $USER
 
 ## ⚡ Quick Start
 
-1. **Clone & Launch**:
+1. **Automated One-Click Install**:
    ```bash
-   git clone https://github.com/your-username/windows-docker-cachyos.git
-   cd windows-docker-cachyos
+   git clone https://github.com/Merxxotas/windows-on-a-docker-container.git
+   cd windows-on-a-docker-container
+   ./install_windows.sh
+   ```
+
+2. **Or Manual Launch**:
+   ```bash
    ./scripts/win-start.sh
    ```
 

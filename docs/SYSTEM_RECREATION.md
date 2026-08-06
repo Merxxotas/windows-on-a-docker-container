@@ -36,8 +36,11 @@ Ensure both devices exist and have read/write permissions (`crw-rw-rw-`).
 
 ## 3. Project Structure & `compose.yml`
 
-Ensure your project directory is located at:
-`/home/merxx/Documents/experiments/windows_Docker-version`
+Clone the repository to your desired location:
+```bash
+git clone https://github.com/Merxxotas/windows-on-a-docker-container.git
+cd windows-on-a-docker-container
+```
 
 The `compose.yml` file contains the following configuration:
 
@@ -48,7 +51,7 @@ services:
     container_name: windows
     environment:
       DISK_SIZE: "64G"
-      RAM_SIZE: "8G"
+      RAM_SIZE: "16G"
       CPU_CORES: "8"
       CPU_MODEL: "host"
       TZ: "America/Bogota"
@@ -67,10 +70,11 @@ services:
       - 3389:3389/tcp
       - 3389:3389/udp
     volumes:
-      - /home/merxx/Documents/experiments/windows_Docker-version:/storage
+      - ./:/storage
       - /home/merxx:/shared/home
       - /mnt/vicioo:/shared/vicioo
-      - /mnt/vicioo/ISOS/en-us_windows_11_iot_enterprise_ltsc_2024_x64_dvd_f6b14814-ENGVersion.iso:/custom.iso
+      # Uncomment to use a custom ISO file:
+      # - /mnt/vicioo/ISOS/en-us_windows_11_iot_enterprise_ltsc_2024_x64_dvd_f6b14814-ENGVersion.iso:/custom.iso
     restart: always
     stop_grace_period: 2m
 ```
@@ -79,12 +83,17 @@ services:
 
 ## 4. Launching the Container
 
-To start the virtual machine:
-
+### Option A: One-click Installer (Recommended)
 ```bash
-cd /home/merxx/Documents/experiments/windows_Docker-version
+./install_windows.sh
+```
+
+### Option B: Manual Launch
+```bash
 docker compose up -d
 ```
 
 ### Verification:
 - Access [http://localhost:8006](http://localhost:8006) in your web browser to monitor the real-time installation and boot process.
+- Connect via RDP: `xfreerdp3 /v:localhost:3389 /u:merxx /p:030414 +clipboard /dynamic-resolution /sound:sys:pulse`
+

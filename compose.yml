@@ -23,9 +23,10 @@ services:
       - 3389:3389/tcp
       - 3389:3389/udp
     volumes:
-      - /home/merxx/Documents/experiments/windows_Docker-version:/storage
+      - ./:/storage
       - /home/merxx:/shared/home
       - /mnt/vicioo:/shared/vicioo
-      - /mnt/vicioo/ISOS/en-us_windows_11_iot_enterprise_ltsc_2024_x64_dvd_f6b14814-ENGVersion.iso:/custom.iso
+      # Uncomment to use a custom ISO file:
+      # - /mnt/vicioo/ISOS/en-us_windows_11_iot_enterprise_ltsc_2024_x64_dvd_f6b14814-ENGVersion.iso:/custom.iso
     restart: always
     stop_grace_period: 2m
