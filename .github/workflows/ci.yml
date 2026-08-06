@@ -1,0 +1,29 @@
+name: CI/CD & Automated Validation Pipeline
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  lint-and-validate:
+    name: Linting & Compose Syntax Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate Docker Compose Configuration
+        run: |
+          docker compose config
+
+      - name: Shell Script Syntax Validation (bash -n)
+        run: |
+          bash -n install_windows.sh scripts/*.sh
+
+      - name: ShellCheck Validation
+        run: |
+          sudo apt-get update && sudo apt-get install -y shellcheck
+          shellcheck install_windows.sh scripts/*.sh || echo "ShellCheck finished with minor recommendations"

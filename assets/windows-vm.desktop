@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Windows 11 (Docker VM)
+Comment=Launch Windows Docker Container and RDP Session
+Exec=/bin/bash -c "cd %k && ./scripts/win-start.sh"
+Icon=virtualbox-windows
+Terminal=true
+Categories=System;Emulator;Utility;
+Keywords=Windows;Docker;VM;KVM;RDP;
