@@ -1,0 +1,18 @@
+# VM Virtual Disk Images & State Files
+data.img
+windows.base
+windows.boot
+windows.mac
+windows.rom
+windows.vars
+windows.ver
+
+# Backups
+backups/
+
+# ISO Files
+*.iso
+
+# OS / Temporary Files
+.DS_Store
+*.log
